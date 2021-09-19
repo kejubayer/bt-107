@@ -5,6 +5,15 @@
         <h2 class="text-center">Edit Product</h2>
         <div class="col-md-3"></div>
         <div class="col-md-6">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form action="{{route('admin.product.edit',$product->id)}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">

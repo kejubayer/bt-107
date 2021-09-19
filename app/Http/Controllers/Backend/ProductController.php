@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::orderBy('id','desc')->paginate(10);
         return view('backend.products.index', compact('products'));
     }
 
@@ -21,7 +22,37 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        try {
+
+         /*  $request->validate([
+              'name'=>'required|max:120',
+              'price'=>'required|numeric',
+              'discount'=>'required|numeric',
+              'description'=>'required',
+              'photo'=>'required|image',
+           ],
+               [
+                   'name.required' => 'test',
+                   'name.max' => 'max',
+                   'price.required'=>'Test price!'
+               ]
+           );*/
+
+        $validator = Validator::make($request->all(),
+            [
+                'name'=>'required|max:120',
+                'price'=>'required|numeric',
+                'discount'=>'required|numeric',
+                'description'=>'required',
+                'photo'=>'required|image',
+            ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+
+        }
+
+
             $newName = 'product_' . time() . '.' . $request->file('photo')->getClientOriginalExtension();
             $request->file('photo')->move('uploads/products', $newName);
             $inputs = [
@@ -33,9 +64,7 @@ class ProductController extends Controller
             ];
             Product::create($inputs);
             return redirect()->route('admin.product');
-        } catch (\Exception $exception) {
-            dd($exception->getMessage());
-        }
+
     }
 
     public function edit($id)
@@ -46,6 +75,20 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(),
+            [
+                'name'=>'required|max:120',
+                'price'=>'required|numeric',
+                'discount'=>'required|numeric',
+                'description'=>'required',
+                'photo'=>'image',
+            ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+
+        }
         $inputs = [
             'name' => $request->input('name'),
             'price' => $request->input('price'),
