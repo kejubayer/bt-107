@@ -26,6 +26,3 @@ Route::post('/products/create',[\App\Http\Controllers\Backend\ProductController:
 Route::get('products/{id}/edit',[\App\Http\Controllers\Backend\ProductController::class,'edit'])->name('admin.product.edit');
 Route::post('products/{id}/edit',[\App\Http\Controllers\Backend\ProductController::class,'update']);
 Route::get('products/{id}/delete',[\App\Http\Controllers\Backend\ProductController::class,'delete'])->name('admin.product.delete');
-
-
-

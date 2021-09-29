@@ -25,7 +25,8 @@
                 <td>{{$product->discount}}</td>
                 <td>{{$product->description}}</td>
                 <td>
-                    <img src="{{asset('uploads/products/'.$product->photo)}}" alt="" width="100px">
+{{--                    <img src="{{asset('uploads/products/'.$product->photo)}}" alt="" width="100px">--}}
+                    <img src="{{$product->photo}}" alt="" width="100px">
                 </td>
                 <td>
                     <a href="{{route('admin.product.edit',$product->id)}}" class="btn btn-warning">Edit</a>

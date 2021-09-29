@@ -49,7 +49,6 @@ class ProductController extends Controller
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
-
         }
 
 
