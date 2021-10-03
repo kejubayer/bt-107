@@ -14,15 +14,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',[\App\Http\Controllers\Backend\DashboardController::class,'index']);
 
-Route::get('/test',[\App\Http\Controllers\Backend\DashboardController::class,'test']);
+Route::get('/',[\App\Http\Controllers\Frontend\FrontendController::class,'index'])->name('home');
 
 
-//Products
-Route::get('/products',[\App\Http\Controllers\Backend\ProductController::class,'index'])->name('admin.product');
-Route::get('/products/create',[\App\Http\Controllers\Backend\ProductController::class,'create'])->name('admin.product.create');
-Route::post('/products/create',[\App\Http\Controllers\Backend\ProductController::class,'store']);
-Route::get('products/{id}/edit',[\App\Http\Controllers\Backend\ProductController::class,'edit'])->name('admin.product.edit');
-Route::post('products/{id}/edit',[\App\Http\Controllers\Backend\ProductController::class,'update']);
-Route::get('products/{id}/delete',[\App\Http\Controllers\Backend\ProductController::class,'delete'])->name('admin.product.delete');
+Route::get('/login', [\App\Http\Controllers\Backend\LoginController::class, 'index'])->name('login');
+Route::post('/login', [\App\Http\Controllers\Backend\LoginController::class, 'login']);
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', [\App\Http\Controllers\Backend\LoginController::class, 'logout'])->name('logout');
+
+    Route::middleware('isAdmin')->prefix('dashboard')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
+        //Products
+        Route::prefix('products')->group(function (){
+            Route::get('/', [\App\Http\Controllers\Backend\ProductController::class, 'index'])->name('admin.product');
+            Route::get('/create', [\App\Http\Controllers\Backend\ProductController::class, 'create'])->name('admin.product.create');
+            Route::post('/create', [\App\Http\Controllers\Backend\ProductController::class, 'store']);
+            Route::get('/{id}/edit', [\App\Http\Controllers\Backend\ProductController::class, 'edit'])->name('admin.product.edit');
+            Route::post('/{id}/edit', [\App\Http\Controllers\Backend\ProductController::class, 'update']);
+            Route::get('/{id}/delete', [\App\Http\Controllers\Backend\ProductController::class, 'delete'])->name('admin.product.delete');
+        });
+    });
+});
+
+
