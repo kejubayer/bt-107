@@ -21,10 +21,16 @@ Route::get('/',[\App\Http\Controllers\Frontend\FrontendController::class,'index'
 Route::get('/login', [\App\Http\Controllers\Backend\LoginController::class, 'index'])->name('login');
 Route::post('/login', [\App\Http\Controllers\Backend\LoginController::class, 'login']);
 
+Route::get('register',[\App\Http\Controllers\Frontend\UserController::class,'register'])->name('register');
+Route::post('register',[\App\Http\Controllers\Frontend\UserController::class,'doRegister']);
+
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [\App\Http\Controllers\Backend\LoginController::class, 'logout'])->name('logout');
+
+    Route::get('profile',[\App\Http\Controllers\Frontend\UserController::class,'profile'])->name('profile');
+    Route::post('profile',[\App\Http\Controllers\Frontend\UserController::class,'updateProfile']);
 
     Route::middleware('isAdmin')->prefix('dashboard')->group(function () {
         Route::get('/', [\App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
