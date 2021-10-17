@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[\App\Http\Controllers\Frontend\FrontendController::class,'index'])->name('home');
 
+Route::get('add/cart/{id}',[\App\Http\Controllers\Frontend\CartController::class,'addCart'])->name('add.cart');
+Route::get('cart/',[\App\Http\Controllers\Frontend\CartController::class,'show'])->name('show.cart');
+
 
 Route::get('/login', [\App\Http\Controllers\Backend\LoginController::class, 'index'])->name('login');
 Route::post('/login', [\App\Http\Controllers\Backend\LoginController::class, 'login']);

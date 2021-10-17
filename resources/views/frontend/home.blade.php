@@ -8,8 +8,7 @@
                 <p class="lead text-muted">Something short and leading about the collection below—its contents, the
                     creator, etc.</p>
                 <p>
-                    <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                    <a href="{{route('show.cart')}}" class="btn btn-primary my-2">Show cart</a>
                 </p>
             </div>
         </div>
@@ -30,7 +29,7 @@
                                 <p class="card-text">{{$product->description}}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Add to cart</button>
+                                        <a href="{{route('add.cart',$product->id)}}" class="btn btn-sm btn-outline-secondary">Add to cart</a>
                                     </div>
                                     <small class="text-muted">{{$product->price}} <strong>৳</strong></small>
                                 </div>

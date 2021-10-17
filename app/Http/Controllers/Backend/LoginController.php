@@ -20,9 +20,13 @@ class LoginController extends Controller
             if (\auth()->user()->role == 'admin'){
                 return redirect()->route('dashboard');
             }
+            session()->flash('message','Login Successful!');
+            session()->flash('alert',"success");
             return redirect()->route('home');
 
         }
+        session()->flash('message',"Invalid Credentials!");
+        session()->flash('alert',"warning");
         return redirect()->back();
     }
 
