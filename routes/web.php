@@ -21,6 +21,7 @@ Route::get('add/cart/{id}',[\App\Http\Controllers\Frontend\CartController::class
 Route::get('cart/',[\App\Http\Controllers\Frontend\CartController::class,'show'])->name('show.cart');
 
 
+
 Route::get('/login', [\App\Http\Controllers\Backend\LoginController::class, 'index'])->name('login');
 Route::post('/login', [\App\Http\Controllers\Backend\LoginController::class, 'login']);
 
@@ -34,6 +35,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('profile',[\App\Http\Controllers\Frontend\UserController::class,'profile'])->name('profile');
     Route::post('profile',[\App\Http\Controllers\Frontend\UserController::class,'updateProfile']);
+
+    Route::get('checkout',[\App\Http\Controllers\Frontend\CartController::class,'checkout'])->name('checkout');
+    Route::post('checkout',[\App\Http\Controllers\Frontend\CartController::class,'order']);
+
 
     Route::middleware('isAdmin')->prefix('dashboard')->group(function () {
         Route::get('/', [\App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');

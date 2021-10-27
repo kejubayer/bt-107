@@ -39,6 +39,11 @@
                 </tr>
                 </tbody>
             </table>
+            @if($total_quantity>0)
+            <a class="btn btn-primary" href="{{route('checkout')}}">Place Order</a>
+            @else
+                <a class="btn btn-warning" href="{{route('home')}}">Add product to cart!</a>
+            @endif
         </div>
     </div>
 
