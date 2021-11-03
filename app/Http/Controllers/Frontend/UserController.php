@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -49,6 +51,12 @@ class UserController extends Controller
     public function profile()
     {
         return view('frontend.profile');
+    }
+
+    public function order($id)
+    {
+       $order = Order::where('id',$id)->with('detail')->first();
+       return view('frontend.order',compact('order'));
     }
 
     public function updateProfile(Request $request)
