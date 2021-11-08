@@ -45,6 +45,12 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('isAdmin')->prefix('dashboard')->group(function () {
         Route::get('/', [\App\Http\Controllers\Backend\DashboardController::class, 'index'])->name('dashboard');
+
+        //admin order
+        Route::get('order',[\App\Http\Controllers\Backend\OrderController::class,'index'])->name('admin.order');
+        Route::get('order/{id}',[\App\Http\Controllers\Backend\OrderController::class,'show'])->name('admin.order.show');
+        Route::post('order/{id}/status',[\App\Http\Controllers\Backend\OrderController::class,'update'])->name('admin.order.update');
+
         //Products
         Route::prefix('products')->group(function (){
             Route::get('/', [\App\Http\Controllers\Backend\ProductController::class, 'index'])->name('admin.product');
