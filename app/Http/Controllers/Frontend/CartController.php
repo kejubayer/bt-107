@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -99,6 +101,7 @@ class CartController extends Controller
                 ]);
             }
             session()->forget('cart');
+            Mail::to(auth()->user()->email)->send(new OrderMail($order));
             DB::commit();
             return redirect()->route('profile');
 
